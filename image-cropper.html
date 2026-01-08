@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Cropper | Crop Image Online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .tool-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            padding: 30px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #2d3436;
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        header p {
+            color: #636e72;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .upload-section {
+            border: 3px dashed #6c5ce7;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            background-color: #f9f7ff;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            background-color: #f0edff;
+            border-color: #5b4fcf;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+
+        .upload-section p {
+            margin-top: 20px;
+            color: #636e72;
+            font-size: 1rem;
+        }
+
+        .editor-layout {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .main-editor {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 400px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #image-to-crop {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .ratio-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .ratio-btn {
+            padding: 12px 24px;
+            border: 2px solid #ddd;
+            background-color: white;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .ratio-btn:hover {
+            border-color: #6c5ce7;
+            color: #6c5ce7;
+        }
+
+        .ratio-btn.active {
+            background-color: #6c5ce7;
+            color: white;
+            border-color: #6c5ce7;
+        }
+
+        .primary-btn {
+            background: linear-gradient(90deg, #6a11cb, #2575fc);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.4);
+        }
+
+        .preview-sidebar {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .preview-sidebar h3 {
+            color: #2d3436;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .preview-box {
+            width: 100%;
+            height: 300px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .preview-box p {
+            color: #636e72;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .download-btn {
+            width: 100%;
+            background: linear-gradient(90deg, #00b09b, #96c93d);
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 176, 155, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 176, 155, 0.4);
+        }
+
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #6a11cb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-overlay p {
+            color: #6a11cb;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 992px) {
+            .editor-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-container {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .ratio-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .ratio-btn {
+                width: 100%;
+            }
+            
+            .img-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="tool-container">
+    <header>
+        <h1>Image Cropper</h1>
+        <p>Upload, select ratio, and download your perfect crop. Drag and drop is also supported!</p>
+    </header>
+
+    <div class="upload-section" id="drop-area">
+        <input type="file" id="file-input" accept="image/*" hidden>
+        <label for="file-input" class="upload-btn">Choose Image</label>
+        <p>Supports: PNG, JPG, WEBP, BMP, GIF, TIFF</p>
+        <p>Or drag and drop your image here</p>
+    </div>
+
+    <div class="editor-layout" id="editor-layout" style="display: none;">
+        <div class="main-editor">
+            <div class="img-container">
+                <img id="image-to-crop">
+            </div>
+            
+            <div class="controls">
+                <div class="ratio-buttons">
+                    <button class="ratio-btn active" data-ratio="NaN">Free</button>
+                    <button class="ratio-btn" data-ratio="1">1:1</button>
+                    <button class="ratio-btn" data-ratio="1.333">4:3</button>
+                    <button class="ratio-btn" data-ratio="1.777">16:9</button>
+                    <button class="ratio-btn" data-ratio="1.6">16:10</button>
+                    <button class="ratio-btn" data-ratio="1.5">3:2</button>
+                </div>
+                <button id="crop-btn" class="primary-btn">Crop Image</button>
+            </div>
+        </div>
+
+        <div class="preview-sidebar">
+            <h3>Preview</h3>
+            <div id="result-preview" class="preview-box">
+                <p>Cropped result will appear here</p>
+            </div>
+            <button id="download-btn" class="download-btn" style="display: none;">Download Result</button>
+        </div>
+    </div>
+
+    <div id="loader" class="loader-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p>Processing...</p>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+    // DOM Elements
+    const fileInput = document.getElementById('file-input');
+    const dropArea = document.getElementById('drop-area');
+    const imageToCrop = document.getElementById('image-to-crop');
+    const editorLayout = document.getElementById('editor-layout');
+    const ratioButtons = document.querySelectorAll('.ratio-btn');
+    const cropBtn = document.getElementById('crop-btn');
+    const resultPreview = document.getElementById('result-preview');
+    const downloadBtn = document.getElementById('download-btn');
+    const loader = document.getElementById('loader');
+    
+    // Variables
+    let cropper;
+    let currentImageUrl;
+    
+    // Event Listeners
+    fileInput.addEventListener('change', handleFileSelect);
+    
+    // Drag and drop functionality
+    dropArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropArea.style.borderColor = '#5b4fcf';
+        dropArea.style.backgroundColor = '#f0edff';
+    });
+    
+    dropArea.addEventListener('dragleave', () => {
+        dropArea.style.borderColor = '#6c5ce7';
+        dropArea.style.backgroundColor = '#f9f7ff';
+    });
+    
+    dropArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropArea.style.borderColor = '#6c5ce7';
+        dropArea.style.backgroundColor = '#f9f7ff';
+        
+        if (e.dataTransfer.files.length) {
+            handleFile(e.dataTransfer.files[0]);
+        }
+    });
+    
+    // Ratio buttons
+    ratioButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            ratioButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            const ratio = parseFloat(button.dataset.ratio);
+            if (cropper) {
+                if (isNaN(ratio)) {
+                    cropper.setAspectRatio(NaN);
+                } else {
+                    cropper.setAspectRatio(ratio);
+                }
+            }
+        });
+    });
+    
+    // Crop button
+    cropBtn.addEventListener('click', cropImage);
+    
+    // Download button
+    downloadBtn.addEventListener('click', downloadImage);
+    
+    // Functions
+    function handleFileSelect(e) {
+        const file = e.target.files[0];
+        if (file) {
+            handleFile(file);
+        }
+    }
+    
+    function handleFile(file) {
+        // Validate file type
+        const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/bmp', 'image/gif', 'image/tiff'];
+        if (!validTypes.includes(file.type)) {
+            alert('Please select a valid image file (PNG, JPG, WEBP, BMP, GIF, TIFF)');
+            return;
+        }
+        
+        // Show loader
+        showLoader();
+        
+        // Clear previous cropper
+        if (cropper) {
+            cropper.destroy();
+        }
+        
+        // Clear previous image URL
+        if (currentImageUrl) {
+            URL.revokeObjectURL(currentImageUrl);
+        }
+        
+        // Create new image URL
+        currentImageUrl = URL.createObjectURL(file);
+        
+        // Set image source
+        imageToCrop.src = currentImageUrl;
+        
+        // Wait for image to load
+        imageToCrop.onload = () => {
+            // Hide loader
+            hideLoader();
+            
+            // Show editor layout
+            editorLayout.style.display = 'grid';
+            
+            // Initialize cropper
+            cropper = new Cropper(imageToCrop, {
+                aspectRatio: NaN, // Free mode by default
+                viewMode: 1,
+                guides: true,
+                background: false,
+                autoCropArea: 0.8,
+                responsive: true,
+                restore: true,
+                checkCrossOrigin: false
+            });
+            
+            // Reset preview
+            resultPreview.innerHTML = '<p>Cropped result will appear here</p>';
+            downloadBtn.style.display = 'none';
+            
+            // Scroll to editor
+            editorLayout.scrollIntoView({ behavior: 'smooth' });
+        };
+    }
+    
+    function cropImage() {
+        if (!cropper) {
+            alert('Please upload an image first');
+            return;
+        }
+        
+        showLoader();
+        
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 800,
+            height: 600,
+            fillColor: '#fff',
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high'
+        });
+        
+        // Create image from canvas
+        const croppedImageUrl = canvas.toDataURL('image/png');
+        
+        // Update preview
+        resultPreview.innerHTML = `<img src="${croppedImageUrl}" style="max-width: 100%; max-height: 100%;" alt="Cropped Result">`;
+        
+        // Store the cropped image URL for download
+        downloadBtn.dataset.imageUrl = croppedImageUrl;
+        
+        // Show download button
+        downloadBtn.style.display = 'block';
+        
+        hideLoader();
+    }
+    
+    function downloadImage() {
+        const imageUrl = downloadBtn.dataset.imageUrl;
+        if (!imageUrl) {
+            alert('Please crop an image first');
+            return;
+        }
+        
+        // Create a temporary link element
+        const link = document.createElement('a');
+        link.href = imageUrl;
+        link.download = 'cropped-image.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+    
+    function showLoader() {
+        loader.style.display = 'flex';
+    }
+    
+    function hideLoader() {
+        loader.style.display = 'none';
+    }
+    
+    // Initialize with a sample image (optional)
+    window.addEventListener('load', () => {
+        // You can preload a sample image here if desired
+        // For now, we'll just initialize without a sample
+    });
+</script>
+</body>
+</html>
