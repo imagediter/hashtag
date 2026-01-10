@@ -55,11 +55,11 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(15, 23, 42, 0.98);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             border-bottom: 3px solid #3b82f6;
         }
         
@@ -77,7 +77,7 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            color: #60a5fa;
+            color: #3b82f6;
             font-size: 1.5rem;
             font-weight: 700;
         }
@@ -93,7 +93,7 @@
         }
         
         .nav-links a {
-            color: #f1f5f9;
+            color: #374151;
             text-decoration: none;
             font-weight: 500;
             padding: 8px 15px;
@@ -118,7 +118,7 @@
             background: none;
             border: none;
             font-size: 1.5rem;
-            color: #f1f5f9;
+            color: #374151;
             cursor: pointer;
         }
         
@@ -132,12 +132,12 @@
             max-width: 1000px;
             margin: 40px auto;
             padding: 30px;
-            background: #1e293b;
+            background: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             display: none;
-            color: #f1f5f9;
-            border: 1px solid #475569;
+            color: #374151;
+            border: 1px solid #e5e7eb;
         }
         
         .seo-section.active {
@@ -146,26 +146,26 @@
         }
         
         .seo-section h1 {
-            color: #60a5fa;
+            color: #3b82f6;
             margin-bottom: 20px;
             font-size: 2.2rem;
         }
         
         .seo-section h2 {
-            color: #f1f5f9;
+            color: #1f2937;
             margin: 25px 0 15px;
             font-size: 1.5rem;
         }
         
         .seo-section h3 {
-            color: #cbd5e1;
+            color: #4b5563;
             margin: 20px 0 10px;
             font-size: 1.2rem;
         }
         
         .seo-content {
             line-height: 1.8;
-            color: #e2e8f0;
+            color: #4b5563;
         }
         
         .seo-content p {
@@ -179,7 +179,7 @@
         
         .seo-content li {
             margin-bottom: 10px;
-            color: #cbd5e1;
+            color: #4b5563;
         }
         
         .close-seo {
@@ -205,12 +205,12 @@
         .breadcrumb {
             margin: 20px auto;
             font-size: 0.9rem;
-            color: #94a3b8;
+            color: #6b7280;
             max-width: 1000px;
         }
         
         .breadcrumb a {
-            color: #60a5fa;
+            color: #3b82f6;
             text-decoration: none;
         }
         
@@ -226,10 +226,10 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: #1e293b;
+                background: #ffffff;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             }
             
             .nav-links.active {
@@ -256,20 +256,21 @@
         :root {
             --primary: #3b82f6;
             --primary-hover: #2563eb;
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-            --border: #475569;
-            --text-main: #f1f5f9;
-            --text-dim: #94a3b8;
+            --bg-light: #ffffff;
+            --card-bg: #ffffff;
+            --border: #e5e7eb;
+            --text-main: #1f2937;
+            --text-dim: #6b7280;
             --success: #10b981;
             --danger: #ef4444;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+            background: #f9fafb;
             color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
@@ -292,7 +293,7 @@
 
         .header h1 {
             font-size: 2.8rem;
-            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 800;
@@ -308,6 +309,7 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            box-shadow: var(--shadow);
         }
 
         .upload-section:hover, .upload-section.dragover {
@@ -333,7 +335,8 @@
             background: var(--card-bg);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
         }
 
         .controls-grid {
@@ -352,10 +355,15 @@
             width: 100%;
             padding: 12px;
             border-radius: 8px;
-            background: #0f172a;
+            background: white;
             border: 1px solid var(--border);
-            color: white;
+            color: var(--text-main);
             outline: none;
+        }
+
+        select:focus, input[type="range"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .btn-group {
@@ -399,13 +407,14 @@
             overflow: hidden;
             border: 1px solid var(--border);
             position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .image-card img {
             width: 100%;
             height: 120px;
             object-fit: cover;
-            background: #000;
+            background: #f3f4f6;
         }
 
         .card-details {
@@ -445,7 +454,7 @@
             transform: translateY(200%);
             transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
             z-index: 1000;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         .status-toast.show { transform: translateY(0); }
@@ -484,13 +493,13 @@
         }
         
         .footer-links a {
-            color: #60a5fa;
+            color: #3b82f6;
             text-decoration: none;
             transition: color 0.3s;
         }
         
         .footer-links a:hover {
-            color: #a78bfa;
+            color: #8b5cf6;
             text-decoration: underline;
         }
 
@@ -1018,7 +1027,7 @@
         div.className = 'image-card';
         div.style.borderColor = 'var(--success)';
         div.innerHTML = `
-            <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #0f172a">
+            <div style="height: 120px; display: flex; align-items: center; justify-content: center; background: #f9fafb">
                 ${result.isPdf ? '<i class="fas fa-file-pdf fa-3x" style="color: #ef4444"></i>' : `<img src="${result.url}" style="height: 100%">`}
             </div>
             <div class="card-details">
