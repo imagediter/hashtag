@@ -3,9 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Converter | Secure Browser-Based Tool</title>
+    <title>Image Converter | Convert Images Online | Toolvexa</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Free online image converter tool. Convert images between JPG, PNG, WebP, PDF and more formats instantly. No file uploads required - 100% secure browser-based conversion.">
+    <meta name="keywords" content="image converter, convert images, JPG to PNG, PNG to JPG, image to PDF, WebP converter, online image converter, format converter">
+    <meta name="author" content="Toolvexa">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Image Converter | Convert Images Online | Toolvexa">
+    <meta property="og:description" content="Free online image converter tool. Convert images between JPG, PNG, WebP, PDF and more formats instantly.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolvexa.com/image-converter">
+    <meta property="og:image" content="https://toolvexa.com/images/image-converter-og.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://toolvexa.com/image-converter">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Image Converter",
+        "url": "https://toolvexa.com/image-converter",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any",
+        "description": "Convert images between different formats online for free",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "Toolvexa",
+            "url": "https://toolvexa.com"
+        }
+    }
+    </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Navigation Bar Styles -->
+    <style>
+        /* Navigation Bar */
+        .tool-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 3px solid #3b82f6;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #60a5fa;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .nav-brand i {
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: #f1f5f9;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .back-to-home {
+            background: #3b82f6;
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 25px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #f1f5f9;
+            cursor: pointer;
+        }
+        
+        /* Adjust body padding for fixed navbar */
+        body {
+            padding-top: 80px;
+        }
+        
+        /* SEO Pages Styles */
+        .seo-section {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #1e293b;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: none;
+            color: #f1f5f9;
+            border: 1px solid #475569;
+        }
+        
+        .seo-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .seo-section h1 {
+            color: #60a5fa;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        .seo-section h2 {
+            color: #f1f5f9;
+            margin: 25px 0 15px;
+            font-size: 1.5rem;
+        }
+        
+        .seo-section h3 {
+            color: #cbd5e1;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .seo-content {
+            line-height: 1.8;
+            color: #e2e8f0;
+        }
+        
+        .seo-content p {
+            margin-bottom: 15px;
+        }
+        
+        .seo-content ul, .seo-content ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .seo-content li {
+            margin-bottom: 10px;
+            color: #cbd5e1;
+        }
+        
+        .close-seo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            margin: 20px auto;
+            font-size: 0.9rem;
+            color: #94a3b8;
+            max-width: 1000px;
+        }
+        
+        .breadcrumb a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        
+        .breadcrumb span {
+            margin: 0 5px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1e293b;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-container {
+                flex-wrap: wrap;
+            }
+            
+            .seo-section {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+    
+    <!-- Original Tool Styles -->
     <style>
         :root {
             --primary: #3b82f6;
@@ -219,15 +465,76 @@
             transition: width 0.2s;
         }
 
+        /* Footer Styles */
+        .tool-footer {
+            text-align: center;
+            color: var(--text-dim);
+            margin: 40px 0;
+            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: #60a5fa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #a78bfa;
+            text-decoration: underline;
+        }
+
         /* Mobile Adjustments */
         @media (max-width: 480px) {
             .header { padding: 20px 0; }
             .btn { width: 100%; }
             .preview-grid { grid-template-columns: 1fr 1fr; }
+            .footer-links { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
+
+<!-- Navigation Bar -->
+<nav class="tool-navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-brand">
+            <i class="fas fa-tools"></i> Toolvexa
+        </a>
+        
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#tools">All Tools</a></li>
+            <li><a href="index.html#image-tools">Image Tools</a></li>
+            <li><a href="#privacy-policy" onclick="showSeoPage('privacy')">Privacy Policy</a></li>
+            <li><a href="#terms" onclick="showSeoPage('terms')">Terms of Service</a></li>
+            <li><a href="index.html" class="back-to-home">Back to Home</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+    <a href="index.html">Home</a> 
+    <span>></span>
+    <a href="index.html#image-tools">Image Tools</a>
+    <span>></span>
+    <span>Image Converter</span>
+</div>
 
 <div class="container">
     <header class="header">
@@ -277,19 +584,251 @@
     </section>
 
     <div class="preview-grid" id="previewGrid">
-        </div>
+    </div>
     
     <div id="resultsGrid" class="preview-grid" style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px;">
-        </div>
+    </div>
 
-    <footer style="text-align: center; color: var(--text-dim); margin: 40px 0; font-size: 0.9rem;">
+    <!-- SEO Pages Section -->
+    <div class="seo-section" id="privacy-policy">
+        <button class="close-seo" onclick="hideSeoPage()">×</button>
+        <h1>Privacy Policy</h1>
+        <div class="seo-content">
+            <p><strong>Last Updated: January 2024</strong></p>
+            
+            <h2>1. Introduction</h2>
+            <p>Welcome to Toolvexa Image Converter. Your privacy is critically important to us. This privacy policy document outlines the types of personal information that is received and collected by our tool and how it is used.</p>
+            
+            <h2>2. Information We Collect</h2>
+            <h3>2.1 No Personal Data Collection</h3>
+            <p>Our Image Converter tool operates entirely in your browser. We do not:</p>
+            <ul>
+                <li>Collect any personal information</li>
+                <li>Upload your images to our servers</li>
+                <li>Store any information about your usage</li>
+                <li>Use cookies for tracking purposes</li>
+            </ul>
+            
+            <h3>2.2 Local Processing</h3>
+            <p>All image conversion happens locally on your device using JavaScript. Your images never leave your computer or mobile device.</p>
+            
+            <h2>3. How We Use Information</h2>
+            <p>Since we don't collect any personal data, there's no information to use or share. The tool functions completely offline once loaded in your browser.</p>
+            
+            <h2>4. Third-Party Services</h2>
+            <p>We only use Font Awesome for icons and Google Fonts for typography. These services may collect limited data as per their own privacy policies.</p>
+            
+            <h2>5. Security</h2>
+            <p>Your security is guaranteed because:</p>
+            <ul>
+                <li>No data transmission occurs</li>
+                <li>All processing is done client-side</li>
+                <li>No server-side storage exists</li>
+            </ul>
+            
+            <h2>6. Changes to This Policy</h2>
+            <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new privacy policy on this page.</p>
+            
+            <h2>7. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us at: privacy@toolvexa.com</p>
+        </div>
+    </div>
+
+    <div class="seo-section" id="terms-of-service">
+        <button class="close-seo" onclick="hideSeoPage()">×</button>
+        <h1>Terms of Service</h1>
+        <div class="seo-content">
+            <p><strong>Last Updated: January 2024</strong></p>
+            
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing and using the Toolvexa Image Converter tool, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            
+            <h2>2. Description of Service</h2>
+            <p>Toolvexa Image Converter provides a free online tool for converting image files between different formats. The service includes:</p>
+            <ul>
+                <li>Image format conversion (JPG, PNG, WebP, etc.)</li>
+                <li>Image to PDF conversion</li>
+                <li>Local processing (no server uploads)</li>
+                <li>Quality adjustment controls</li>
+                <li>Batch conversion capabilities</li>
+            </ul>
+            
+            <h2>3. User Responsibilities</h2>
+            <p>You agree to:</p>
+            <ul>
+                <li>Use the tool only for lawful purposes</li>
+                <li>Not upload any malicious or harmful content</li>
+                <li>Respect copyright and intellectual property rights</li>
+                <li>Not attempt to reverse engineer or hack the tool</li>
+            </ul>
+            
+            <h2>4. Service Limitations</h2>
+            <p>The service is provided "as is" without warranties of any kind. We do not guarantee:</p>
+            <ul>
+                <li>Uninterrupted service availability</li>
+                <li>Specific conversion results</li>
+                <li>Compatibility with all browsers or devices</li>
+                <li>Image quality preservation in all cases</li>
+            </ul>
+            
+            <h2>5. Intellectual Property</h2>
+            <p>All images you upload remain your property. We do not claim any rights over your original or converted images.</p>
+            
+            <h2>6. Limitation of Liability</h2>
+            <p>Toolvexa shall not be liable for any indirect, incidental, special, consequential or punitive damages resulting from your use of the tool.</p>
+            
+            <h2>7. Changes to Terms</h2>
+            <p>We reserve the right to modify these terms at any time. Continued use of the tool constitutes acceptance of modified terms.</p>
+            
+            <h2>8. Contact Information</h2>
+            <p>For any questions regarding these Terms of Service, please contact: legal@toolvexa.com</p>
+        </div>
+    </div>
+
+    <div class="seo-section" id="about-tool">
+        <button class="close-seo" onclick="hideSeoPage()">×</button>
+        <h1>About Image Converter Tool</h1>
+        <div class="seo-content">
+            <h2>What is Toolvexa Image Converter?</h2>
+            <p>Toolvexa Image Converter is a free online tool that helps you convert images between different formats instantly. It's perfect for web developers, designers, photographers, and anyone who needs to change image formats for compatibility or optimization purposes.</p>
+            
+            <h2>Key Features</h2>
+            <ul>
+                <li><strong>Browser-Based Processing:</strong> All conversions happen locally in your browser</li>
+                <li><strong>Multiple Formats:</strong> Convert between JPG, PNG, WebP, and PDF</li>
+                <li><strong>Quality Control:</strong> Adjust quality settings for optimal results</li>
+                <li><strong>Batch Processing:</strong> Convert multiple images at once</li>
+                <li><strong>Privacy Guaranteed:</strong> Your images never leave your device</li>
+                <li><strong>No Limits:</strong> Process as many images as you need</li>
+            </ul>
+            
+            <h2>Supported Formats</h2>
+            <ul>
+                <li><strong>JPEG/JPG:</strong> Best for photographs and complex images</li>
+                <li><strong>PNG:</strong> Perfect for images with transparency</li>
+                <li><strong>WebP:</strong> Next-generation format with superior compression</li>
+                <li><strong>PDF:</strong> Convert images to PDF documents</li>
+            </ul>
+            
+            <h2>How It Works</h2>
+            <p>The conversion process is simple and secure:</p>
+            <ol>
+                <li>Upload your images (drag & drop or browse)</li>
+                <li>Select your desired output format</li>
+                <li>Adjust quality settings if needed</li>
+                <li>Click convert and download your files</li>
+            </ol>
+            
+            <h2>Use Cases</h2>
+            <ul>
+                <li><strong>Web Development:</strong> Convert images to WebP for faster loading</li>
+                <li><strong>Documentation:</strong> Convert images to PDF for reports</li>
+                <li><strong>Compatibility:</strong> Convert images for specific software requirements</li>
+                <li><strong>Storage Optimization:</strong> Convert to more efficient formats</li>
+                <li><strong>Email Attachments:</strong> Convert to smaller formats for email</li>
+            </ul>
+            
+            <h2>Technical Information</h2>
+            <p>The tool uses modern web technologies including:</p>
+            <ul>
+                <li>Canvas API for image manipulation</li>
+                <li>FileReader API for local file access</li>
+                <li>jsPDF library for PDF generation</li>
+                <li>Blob API for file creation and download</li>
+            </ul>
+            
+            <h2>Frequently Asked Questions</h2>
+            <h3>Is it really free?</h3>
+            <p>Yes! Toolvexa Image Converter is completely free with no hidden costs or limitations.</p>
+            
+            <h3>Are my images safe?</h3>
+            <p>Absolutely. All processing happens in your browser. Your images never get uploaded to any server.</p>
+            
+            <h3>What's the maximum file size?</h3>
+            <p>The tool can handle files up to 15MB efficiently. Larger files may take longer to process depending on your device's capabilities.</p>
+            
+            <h3>Which browsers are supported?</h3>
+            <p>All modern browsers including Chrome, Firefox, Safari, Edge, and Opera.</p>
+        </div>
+    </div>
+
+    <footer class="tool-footer">
         <p><i class="fas fa-user-shield"></i> Your images are processed locally and never touch our servers.</p>
+        <div class="footer-links">
+            <a href="#privacy-policy" onclick="showSeoPage('privacy')">Privacy Policy</a>
+            <a href="#terms-of-service" onclick="showSeoPage('terms')">Terms of Service</a>
+            <a href="#about-tool" onclick="showSeoPage('about')">About This Tool</a>
+            <a href="index.html">Back to Home</a>
+        </div>
+        <p style="margin-top: 15px;">© 2024 Image Converter Tool | Toolvexa</p>
+        <p style="margin-top: 10px;">Made with <i class="fas fa-heart" style="color: #ef4444;"></i> for everyone</p>
     </footer>
 </div>
 
 <div id="statusToast" class="status-toast"></div>
 
 <script>
+    // Navigation functionality
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            navLinks.classList.remove('active');
+        }
+    });
+    
+    // SEO pages functionality
+    function showSeoPage(page) {
+        // Hide all seo sections first
+        document.querySelectorAll('.seo-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        
+        // Show the requested section
+        let sectionId = '';
+        switch(page) {
+            case 'privacy':
+                sectionId = 'privacy-policy';
+                break;
+            case 'terms':
+                sectionId = 'terms-of-service';
+                break;
+            case 'about':
+                sectionId = 'about-tool';
+                break;
+        }
+        
+        document.getElementById(sectionId).classList.add('active');
+        
+        // Close mobile menu if open
+        navLinks.classList.remove('active');
+        
+        // Scroll to the section
+        setTimeout(() => {
+            document.getElementById(sectionId).scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    }
+    
+    function hideSeoPage() {
+        document.querySelectorAll('.seo-section').forEach(section => {
+            section.classList.remove('active');
+        });
+    }
+    
+    // Close SEO section when clicking outside
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('seo-section')) {
+            hideSeoPage();
+        }
+    });
+
+    // Original Tool JavaScript
     const fileInput = document.getElementById('fileInput');
     const dropZone = document.getElementById('dropZone');
     const previewGrid = document.getElementById('previewGrid');
@@ -518,7 +1057,6 @@
     convertBtn.addEventListener('click', convertAll);
     downloadAllBtn.addEventListener('click', downloadAll);
     document.getElementById('clearBtn').addEventListener('click', clearAll);
-
 </script>
 </body>
 </html>
