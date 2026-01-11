@@ -31,16 +31,39 @@
       --dark: #1f2933;
       --gray: #6b7280;
       --light-gray: #f3f4f6;
+      --card-bg: #ffffff;
       --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      --body-bg: var(--light);
+      --text-color: var(--dark);
+      --border-color: rgba(0, 0, 0, 0.05);
+      --footer-bg: linear-gradient(135deg, #111827, #1f2937);
+      --transition-speed: 0.3s;
+    }
+
+    /* Dark Theme Variables */
+    .dark-theme {
+      --light: #121826;
+      --dark: #f3f4f6;
+      --gray: #9ca3af;
+      --light-gray: #1f2937;
+      --card-bg: #1a2332;
+      --body-bg: #0f172a;
+      --text-color: #f3f4f6;
+      --border-color: rgba(255, 255, 255, 0.05);
+      --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      --footer-bg: linear-gradient(135deg, #0f172a, #1e293b);
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--light);
-      color: var(--dark);
+      background-color: var(--body-bg);
+      color: var(--text-color);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background-color var(--transition-speed) ease,
+                  color var(--transition-speed) ease;
     }
 
     h1, h2, h3, h4 {
@@ -48,17 +71,60 @@
       font-weight: 700;
     }
 
+    /* Theme Toggle Button */
+    .theme-toggle {
+      background: var(--light-gray);
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-color);
+      font-size: 1.2rem;
+      transition: all var(--transition-speed) ease;
+      margin-left: 10px;
+    }
+
+    .theme-toggle:hover {
+      background: var(--primary);
+      color: white;
+      transform: rotate(15deg);
+    }
+
+    .theme-toggle i {
+      transition: transform 0.5s ease;
+    }
+
+    .dark-theme .theme-toggle i.fa-sun {
+      display: block;
+    }
+
+    .dark-theme .theme-toggle i.fa-moon {
+      display: none;
+    }
+
+    .theme-toggle i.fa-sun {
+      display: none;
+    }
+
+    .theme-toggle i.fa-moon {
+      display: block;
+    }
+
     /* Mobile First - Sidebar Implementation */
     .navbar {
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(var(--card-bg), 0.95);
       backdrop-filter: blur(10px);
       z-index: 1000;
       padding: 15px 0;
       box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
     }
 
     .nav-container {
@@ -91,9 +157,10 @@
       background: none;
       border: none;
       font-size: 1.5rem;
-      color: var(--dark);
+      color: var(--text-color);
       cursor: pointer;
       z-index: 1002;
+      transition: color var(--transition-speed) ease;
     }
 
     /* Sidebar Styles */
@@ -103,12 +170,16 @@
       right: -300px;
       width: 280px;
       height: 100vh;
-      background: white;
+      background: var(--card-bg);
       box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
       z-index: 1001;
       transition: right 0.3s ease-in-out;
       padding: 80px 25px 30px;
       overflow-y: auto;
+    }
+
+    .dark-theme .sidebar {
+      box-shadow: -5px 0 25px rgba(0, 0, 0, 0.3);
     }
 
     .sidebar.active {
@@ -154,12 +225,12 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      color: var(--dark);
+      color: var(--text-color);
       text-decoration: none;
       font-weight: 500;
       padding: 12px 15px;
       border-radius: 8px;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
     }
 
     .sidebar-links a:hover {
@@ -180,7 +251,7 @@
 
     .sidebar-divider {
       height: 1px;
-      background: #e5e7eb;
+      background: var(--border-color);
       margin: 20px 0;
     }
 
@@ -214,7 +285,7 @@
       font-size: 0.9rem;
       padding: 8px 10px;
       border-radius: 6px;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
     }
 
     .sidebar-tools-list a:hover {
@@ -382,11 +453,12 @@
       text-align: center;
       font-size: 2rem;
       margin-bottom: 1rem;
-      color: var(--dark);
+      color: var(--text-color);
       position: relative;
       display: inline-block;
       left: 50%;
       transform: translateX(-50%);
+      transition: color var(--transition-speed) ease;
     }
 
     .section-title::after {
@@ -407,6 +479,7 @@
       max-width: 700px;
       margin: 0 auto 40px;
       line-height: 1.5;
+      transition: color var(--transition-speed) ease;
     }
 
     /* Grid & Cards */
@@ -418,7 +491,7 @@
     }
 
     .category-card {
-      background: white;
+      background: var(--card-bg);
       padding: 30px 20px;
       border-radius: 20px;
       text-align: center;
@@ -426,7 +499,7 @@
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border-color);
     }
 
     .category-card::before {
@@ -471,7 +544,8 @@
     .category-card h3 {
       font-size: 1.4rem;
       margin-bottom: 10px;
-      color: var(--dark);
+      color: var(--text-color);
+      transition: color var(--transition-speed) ease;
     }
 
     .category-card p {
@@ -479,6 +553,7 @@
       color: var(--gray);
       margin-bottom: 20px;
       line-height: 1.5;
+      transition: color var(--transition-speed) ease;
     }
 
     .explore-btn {
@@ -489,7 +564,7 @@
       border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
       border: 2px solid transparent;
       font-size: 0.9rem;
     }
@@ -507,6 +582,11 @@
       padding: 40px 20px;
       margin-top: 30px;
       box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.03);
+      transition: all var(--transition-speed) ease;
+    }
+
+    .dark-theme .tools-section {
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
     .tools-grid {
@@ -517,7 +597,7 @@
     }
 
     .tool-card {
-      background: white;
+      background: var(--card-bg);
       padding: 25px 20px;
       border-radius: 16px;
       box-shadow: var(--card-shadow);
@@ -547,6 +627,10 @@
       transition: all 0.3s ease;
     }
 
+    .dark-theme .tool-icon {
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(99, 102, 241, 0.2));
+    }
+
     .tool-card:hover .tool-icon {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
@@ -556,7 +640,8 @@
     .tool-name {
       font-size: 1.2rem;
       margin-bottom: 10px;
-      color: var(--dark);
+      color: var(--text-color);
+      transition: color var(--transition-speed) ease;
     }
 
     .tool-description {
@@ -564,6 +649,7 @@
       color: var(--gray);
       margin-bottom: 20px;
       line-height: 1.5;
+      transition: color var(--transition-speed) ease;
     }
 
     .btn-tool {
@@ -575,7 +661,7 @@
       font-weight: 600;
       text-decoration: none;
       font-size: 0.85rem;
-      transition: all 0.3s ease;
+      transition: all var(--transition-speed) ease;
       border: 2px solid transparent;
     }
 
@@ -587,11 +673,12 @@
 
     /* Footer */
     footer {
-      background: linear-gradient(135deg, #111827, #1f2937);
+      background: var(--footer-bg);
       color: #9ca3af;
       padding: 50px 20px 30px;
       margin-top: 60px;
       position: relative;
+      transition: background var(--transition-speed) ease;
     }
 
     footer::before {
@@ -704,14 +791,28 @@
 
     /* Contact Section */
     .contact-form-container {
-      background: white;
+      background: var(--card-bg);
       padding: 30px;
       border-radius: 20px;
       box-shadow: var(--card-shadow);
+      transition: all var(--transition-speed) ease;
     }
 
     .contact-info, .contact-form {
       margin-bottom: 30px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      background: var(--light-gray);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      transition: all var(--transition-speed) ease;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder {
+      color: var(--gray);
     }
 
     /* Animations */
@@ -791,10 +892,10 @@
       }
 
       .nav-links a {
-        color: var(--dark);
+        color: var(--text-color);
         text-decoration: none;
         font-weight: 500;
-        transition: color 0.3s;
+        transition: color var(--transition-speed) ease;
         position: relative;
       }
 
@@ -875,7 +976,7 @@
     @media print {
       .navbar, .sidebar, .sidebar-overlay, .mobile-menu-btn,
       .cta-btn, .explore-btn, .btn-tool, .social-links,
-      .contact-form, .footer-bottom {
+      .contact-form, .footer-bottom, .theme-toggle {
         display: none !important;
       }
       
@@ -927,10 +1028,18 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       
-      <!-- Mobile Menu Button -->
-      <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="fas fa-bars"></i>
-      </button>
+      <div style="display: flex; align-items: center;">
+        <!-- Theme Toggle Button -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+          <i class="fas fa-sun"></i>
+        </button>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -952,6 +1061,12 @@
       <li><a href="#about"><i class="fas fa-info-circle"></i> About</a></li>
       <li><a href="#blog"><i class="fas fa-blog"></i> Blog</a></li>
       <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li>
+        <a href="#" id="sidebarThemeToggle">
+          <i class="fas fa-moon"></i> Dark Mode
+          <span id="themeStatus" style="margin-left: auto; font-size: 0.8rem; opacity: 0.7;">OFF</span>
+        </a>
+      </li>
     </ul>
     
     <div class="sidebar-divider"></div>
@@ -1050,7 +1165,7 @@
     
     <!-- Image Tools Section -->
     <div class="tools-section" id="image-tools">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">Image Tools</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">Image Tools</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Complete suite of image editing and processing tools</p>
       
       <div class="tools-grid">
@@ -1130,7 +1245,7 @@
     
     <!-- PDF Tools Section -->
     <div class="tools-section" id="pdf-tools">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">PDF Tools</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">PDF Tools</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Powerful PDF processing and conversion tools</p>
       
       <div class="tools-grid">
@@ -1183,7 +1298,7 @@
 
     <!-- SEO Tools Section -->
     <div class="tools-section" id="seo-tools">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">SEO Tools</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">SEO Tools</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Improve your website's search engine visibility</p>
       
       <div class="tools-grid">
@@ -1227,7 +1342,7 @@
 
     <!-- Calculator Tools Section -->
     <div class="tools-section" id="calculators">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">Calculators</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">Calculators</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Financial, mathematical, and conversion calculators</p>
       
       <div class="tools-grid">
@@ -1271,7 +1386,7 @@
 
     <!-- AI Tools Section -->
     <div class="tools-section" id="ai-tools">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">AI Tools</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">AI Tools</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Artificial Intelligence powered productivity tools</p>
       
       <div class="tools-grid">
@@ -1315,7 +1430,7 @@
 
     <!-- Text Tools Section -->
     <div class="tools-section" id="text-tools">
-      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--dark);">Text Tools</h3>
+      <h3 style="font-size: 1.8rem; margin-bottom: 10px; color: var(--text-color);">Text Tools</h3>
       <p style="color: var(--gray); margin-bottom: 30px; font-size: 1rem;">Text manipulation and formatting utilities</p>
       
       <div class="tools-grid">
@@ -1362,12 +1477,12 @@
   <section class="section" id="about">
     <h2 class="section-title">About Toolvexa</h2>
     <div style="max-width: 800px; margin: 0 auto;">
-      <div style="background: white; padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow);">
-        <p style="margin-bottom: 20px; font-size: 1rem;">Toolvexa is your go-to platform for free online tools that simplify everyday tasks. We offer a comprehensive suite of tools for image processing, PDF manipulation, SEO optimization, calculations, AI-powered utilities, and text formatting.</p>
+      <div style="background: var(--card-bg); padding: 30px; border-radius: 20px; box-shadow: var(--card-shadow);">
+        <p style="margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">Toolvexa is your go-to platform for free online tools that simplify everyday tasks. We offer a comprehensive suite of tools for image processing, PDF manipulation, SEO optimization, calculations, AI-powered utilities, and text formatting.</p>
         
-        <p style="margin-bottom: 20px; font-size: 1rem;">Our mission is to provide accessible, high-quality tools that help individuals and businesses work more efficiently without the need for expensive software or technical expertise.</p>
+        <p style="margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">Our mission is to provide accessible, high-quality tools that help individuals and businesses work more efficiently without the need for expensive software or technical expertise.</p>
         
-        <p style="margin-bottom: 20px; font-size: 1rem;">All our tools are completely free to use, with no registration required. We prioritize user privacy and process files locally in your browser whenever possible.</p>
+        <p style="margin-bottom: 20px; font-size: 1rem; color: var(--text-color);">All our tools are completely free to use, with no registration required. We prioritize user privacy and process files locally in your browser whenever possible.</p>
       </div>
     </div>
   </section>
@@ -1437,9 +1552,9 @@
       <div class="contact-form">
         <h3 style="margin-bottom: 20px; color: var(--primary);">Send Message</h3>
         <form style="display: flex; flex-direction: column; gap: 15px;">
-          <input type="text" placeholder="Your Name" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif;">
-          <input type="email" placeholder="Your Email" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif;">
-          <textarea placeholder="Your Message" rows="4" style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif;"></textarea>
+          <input type="text" placeholder="Your Name" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; background: var(--light-gray); color: var(--text-color);">
+          <input type="email" placeholder="Your Email" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; background: var(--light-gray); color: var(--text-color);">
+          <textarea placeholder="Your Message" rows="4" style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Inter', sans-serif; background: var(--light-gray); color: var(--text-color);"></textarea>
           <button type="submit" style="padding: 12px 30px; background: var(--primary); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">Send Message</button>
         </form>
       </div>
@@ -1501,6 +1616,54 @@
   </footer>
 
   <script>
+    // Dark Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const sidebarThemeToggle = document.getElementById('sidebarThemeToggle');
+    const themeStatus = document.getElementById('themeStatus');
+    const body = document.body;
+    
+    // Check for saved theme preference or prefer-color-scheme
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Set initial theme
+    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
+      body.classList.add('dark-theme');
+      updateThemeStatus(true);
+    } else {
+      updateThemeStatus(false);
+    }
+    
+    // Main theme toggle function
+    function toggleTheme() {
+      const isDark = body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeStatus(isDark);
+      
+      // Add animation to the toggle button
+      themeToggle.style.transform = 'rotate(360deg)';
+      setTimeout(() => {
+        themeToggle.style.transform = '';
+      }, 300);
+    }
+    
+    // Update theme status text and icon
+    function updateThemeStatus(isDark) {
+      if (themeStatus) {
+        themeStatus.textContent = isDark ? 'ON' : 'OFF';
+      }
+    }
+    
+    // Event listeners for theme toggles
+    themeToggle.addEventListener('click', toggleTheme);
+    
+    if (sidebarThemeToggle) {
+      sidebarThemeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleTheme();
+      });
+    }
+    
     // Mobile Sidebar Functionality
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const sidebar = document.getElementById('sidebar');
@@ -1526,7 +1689,11 @@
     
     // Close sidebar when clicking on a link (for mobile)
     document.querySelectorAll('.sidebar-links a').forEach(link => {
-      link.addEventListener('click', closeSidebar);
+      link.addEventListener('click', function(e) {
+        if (!this.id.includes('Theme')) { // Don't close for theme toggle
+          closeSidebar();
+        }
+      });
     });
     
     // Add smooth scrolling to all links
@@ -1647,6 +1814,18 @@
         }
       });
     });
+    
+    // Update theme status in sidebar when theme changes
+    const themeObserver = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === 'class') {
+          const isDark = body.classList.contains('dark-theme');
+          updateThemeStatus(isDark);
+        }
+      });
+    });
+    
+    themeObserver.observe(body, { attributes: true });
   </script>
 </body>
 </html>
